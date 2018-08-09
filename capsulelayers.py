@@ -1,9 +1,5 @@
 """
-Some key layers used for constructing a Capsule Network. These layers can used to construct CapsNet on other dataset, 
-not just on MNIST.
-*NOTE*: some functions can be implemented in multiple ways, I keep all of them. You can try them for yourself just by
-uncommenting them and commenting their counterparts.
-Author: Xifeng Guo, E-mail: `guoxifeng1990@163.com`, Github: `https://github.com/XifengGuo/CapsNet-Keras`
+This code is copied from  `https://github.com/XifengGuo/CapsNet-Keras`
 """
 
 import keras.backend as K
@@ -197,14 +193,3 @@ def PrimaryCap(inputs, dim_capsule, n_channels, kernel_size, strides, padding,re
     return layers.Lambda(squash, name='primarycap_squash'+str(region))(output)
 
 
-"""
-# The following is another way to implement primary capsule layer. This is much slower.
-# Apply Conv2D `n_channels` times and concatenate all capsules
-def PrimaryCap(inputs, dim_capsule, n_channels, kernel_size, strides, padding):
-    outputs = []
-    for _ in range(n_channels):
-        output = layers.Conv2D(filters=dim_capsule, kernel_size=kernel_size, strides=strides, padding=padding)(inputs)
-        outputs.append(layers.Reshape([output.get_shape().as_list()[1] ** 2, dim_capsule])(output))
-    outputs = layers.Concatenate(axis=1)(outputs)
-    return layers.Lambda(squash)(outputs)
-"""
