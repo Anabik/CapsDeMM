@@ -62,17 +62,13 @@ def prepareModel():
     conv1 = Conv2D(filters=32, kernel_size=5, strides=2, padding='valid', name='conv1')(x)
     conv1 =Activation('relu',name='relu1')(conv1) 
     # Layer 2: Conv2D layer with `squash` activation, then reshape to [None, num_capsule, dim_capsule]
-    primarycaps = PrimaryCap(conv1, dim_capsule=8, n_channels=16, kernel_size=5, strides=2, padding='valid')#32 is changed to 32  
+    primarycaps = PrimaryCap(conv1, dim_capsule=8, n_channels=16, kernel_size=5, strides=2, padding='valid') 
     primarycaps = Reshape((53*53,16,8))(primarycaps)
     # Layer 3: Capsule layer. Routing algorithm works here.
-    digitcaps = TimeDistributed(CapsuleLayer(num_capsule=1, dim_capsule=8, num_routing=num_routing,#16 is changed to 16
+    digitcaps = TimeDistributed(CapsuleLayer(num_capsule=1, dim_capsule=8, num_routing=num_routing,
                              name='digitcaps'))(primarycaps)
-    # Layer 4: This is an auxiliary layer to replace each capsule with its length. Just to match the true label's shape.
-    # If using tensorflow, this will not be necessary. :)
     out_caps = Length(name='capsnet')(digitcaps)
     output = TrimmedAveragePool()(out_caps)
-    
-    #output = GlobalMaxPooling1D()(out_caps)
     model=Model(inputs=x,outputs=output)
     model.summary()
     return model
@@ -145,10 +141,4 @@ for fold in range(1,2):
     #Test Data Preparation
     testImg=totalImg[testRange,:,:,:]
     testLabel=label[testRange,:]
-    executeProg(trainImg,trainLabel,testImg,testLabel,nb_epoch,fold)
-    
-
-
-
-
-
+    executeProg(trainImg,trainLabel,testImg,testLabel,nb_epoch,fold)  
