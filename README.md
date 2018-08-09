@@ -6,4 +6,4 @@ microabcess in skin biopsy images,” in MICCAI Proceedings, Granada, Spain, Sep
 <br/>
 <br/>
 
-For the data set contact Prof. Utpal Garain (utpal@isical.ac.in).
+For the dataset contact Prof. Utpal Garain (utpal@isical.ac.in).
