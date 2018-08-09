@@ -1,5 +1,5 @@
 """
-This code is copied from  `https://github.com/XifengGuo/CapsNet-Keras`
+This code is taken from  `https://github.com/XifengGuo/CapsNet-Keras`
 """
 
 import keras.backend as K
